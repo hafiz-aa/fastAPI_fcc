@@ -59,16 +59,6 @@ def root():
     return {"message": "Hello Guys"}
 
 
-# @app.get("/sqlalchemy")
-# def test_posts(db: Session = Depends(get_db)):
-
-#     posts = db.query(models.Post)
-#     print(posts)
-#     return {"data": "success"}
-
-    # Get all posts
-
-
 @app.get("/posts")
 def get_posts(db: Session = Depends(get_db)):
     # cursor.execute(""" SELECT * FROM posts """)
@@ -80,7 +70,7 @@ def get_posts(db: Session = Depends(get_db)):
 
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
-def create_posts(post: schemas.Post, db: Session = Depends(get_db)):
+def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db)):
     # cursor.execute("""INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) RETURNING * """,
     #                (post.title, post.content, post.published))
     # new_post = cursor.fetchone()
@@ -131,7 +121,7 @@ def delete_post(id: int, db: Session = Depends(get_db)):
 
 
 @ app.put("/posts/{id}")
-def update_post(id: int, updated_post: schemas.Post, db: Session = Depends(get_db)):
+def update_post(id: int, updated_post: schemas.PostCreate, db: Session = Depends(get_db)):
     # cursor.execute("""UPDATE posts SET title = %s, content = %s, published = %s WHERE id = %s RETURNING * """,
     #                (post.title, post.content, post.published, (str(id),)))
 
