@@ -29,8 +29,8 @@ def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db), curren
     # # Commit the change
 
     # conn.commit()
-		print(current_user.email)
-		new_post = models.Post(**post.dict())
+		# print(current_user.email)
+		new_post = models.Post(owner_id=current_user.id, **post.dict())
 		db.add(new_post)
 		db.commit()
 		db.refresh(new_post)
@@ -38,6 +38,8 @@ def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db), curren
 
 
 # GET a post
+
+
 @router.get("/{id}", response_model=schemas.Post)
 def get_post(id: int, db: Session = Depends(get_db)):
     # cursor.execute("""SELECT * FROM posts WHERE id = (%s)""", (str(id),))
